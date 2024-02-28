@@ -33,6 +33,19 @@ def monthly_challenge(request, month):
 
 
 def monthly_challenges_by_number(request, month):
-    months = list(monthly_challenges.keys())
-    forward_month = months[month - 1]
+    month_challenges = list(monthly_challenges.keys())
+    forward_month = month_challenges[month - 1]
     return HttpResponseRedirect(get_path(forward_month))
+
+
+def months(request):
+    list_items = ""
+    challenges_months = list(monthly_challenges.keys())
+    for month in challenges_months:
+        list_items += f'<li><a href="{get_path(month)}">{month.capitalize()}</a></li>'
+    response_data = f"""
+    <ul>
+    {list_items}
+    </ul>
+    """
+    return HttpResponse(response_data)
